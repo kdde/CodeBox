@@ -1,0 +1,180 @@
+@charset "UTF-8";
+.mypage-title{
+	position: relative;
+	
+}
+
+.mypage{
+	width: 1050px;
+	height: auto;
+	margin: 5% 5% 0 5%;
+}
+
+.mypage-title{
+	position: relative;
+	left: 190px;
+	margin-bottom: 5px;
+}
+.mypage-addr>li{
+	list-style: none;
+}
+.mypage-info{
+	border: 3px solid #03bb85;
+	width: auto;
+	max-width: 600px;
+	height: 420px;
+	border-radius: 30px;
+	position: relative;
+	top: 0px;
+}
+.member-info>p{
+	font-size: 15px;
+	margin-top: 15px;
+}
+.mypage-img{
+	width: 100%;
+}
+.mypage-img >img{
+	width: 120px;
+	height :150px;
+	margin: 25px;
+	border-radius: 60%;
+	margin-top: 10%;
+	margin-bottom: 200px;
+}
+.main-btn{
+	width: 1050px;
+	height: auto;
+	margin: 10%;
+}
+.member-info{
+	margin-top: 45px;
+}
+.approval-1{
+	position: relative;
+    left: 700px;
+    width: auto;
+    max-width: 249px;
+    top: -250px;
+}
+
+
+.approval-3{
+	border: 3px solid #03bb85;
+	border-radius: 10px;
+}
+.approval-3{
+	border-bottom: 3px solid #03bb85;
+	font-size: 18px;
+	font-weight: 600;
+	text-align: center;
+}
+.approval-3 >.text-link{
+	text-align: center;
+	height: auto;
+}
+
+.salary-info{
+	border: 3px solid #03bb85;
+	border-radius: 30px;
+	width: 950px;
+	margin: 0 5% 5% 5%;
+	text-align: center;
+	position: relative;
+	top: 0px;
+}
+.salary-info-1{
+	text-align: center;	
+}
+.salary-info p{
+	border-bottom: 1px solid #03bb85;
+	margin-top: 5px;
+	padding-bottom: 5px;
+}
+.salary-info thead td{
+	width: 130px;
+	font-size: 15px;
+	font-weight: bold;
+}
+
+.appro{
+	font-size: 15px;
+	font-weight: bold;
+	color: #03bb85;
+}
+
+.member-info li{
+	margin-bottom: 5px;
+}
+.member-info label{
+	display: inline-block;
+	width: 120px;
+	height: 25px;
+	font-size: 16px;
+	font-weight: 600;
+	color: #a4a4a4;
+}
+.member-info span{
+	display: inline-block;
+	height: 25px;
+}
+.m-tit{
+	text-align: center;
+	font-size: 18px;
+	font-weight: 600;
+}
+
+.btn{
+	background-color: #03bb85;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    display: inline-block;
+    width: 110px;
+    height: 30px;
+    border-radius: 5px;
+    margin-left: 20px;
+	margin-top: 20px;
+	margin-bottom: 10px;
+	border: 0;
+	outline: 0;	
+}
+.fir-board{
+	margin-top: 15px;
+	margin-bottom: 40px;
+	width: 950px;
+}
+.sec-board{
+	margin-top: 15px;
+	width: 950px;
+}
+
+.board-list{
+	margin: 50px 70px;
+}
+td{
+	padding: 5px;
+	height: 40px;
+	text-align: center;
+}
+
+.board-title td:nth-child(1){
+	width: 120px;
+}
+.board-title td:nth-child(2){
+	width: 400px;
+}
+.board-title td:nth-child(3){
+	width: 150px;
+}
+.board-title td:nth-child(4){
+	width: 150px;
+}
+.board-title td:nth-child(5){
+	width: 150px;
+}
+
+.board tr:nth-child(even){
+	background: rgb(134, 209, 15, 20%);
+}

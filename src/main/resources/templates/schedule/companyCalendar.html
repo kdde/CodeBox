@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<th:block th:insert="~{admin/AdminLayout :: head}" />
+<link rel="stylesheet" href="/css/admin/main.css">
+      
+<script src='/js/main.js'></script>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		var admin = $("#adminUser").val();
+		if(!admin.includes("ADMIN")){
+			var test =  $(".fc-addEventButton-button").attr("style","display:none");
+		}
+	});
+</script>
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		var calendarEl = document.getElementById('calendar');
+		var calendar = new FullCalendar.Calendar(calendarEl, {
+			timeZone: 'local',
+			initialView : 'dayGridMonth',
+			editable: false,
+			displayEventTime: false,
+			events:
+				$.ajax({
+					url: "/schedule/companyCalenda/list",
+					method: "GET",
+					dataType: "JSON",
+					headers: {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},
+					success: function(list, status) {
+						console.log(list)
+						$.each(list, function(index, dto){
+							var obj = {
+									"title" : dto.title,
+									"start" : moment(dto.startTime).format('YYYY-MM-DD'),
+									"end" : moment(dto.endTime).format('YYYY-MM-DD'),
+									"cno" : dto.cno2,
+									"color" : "rgb(3, 187, 133)"
+							}
+							calendar.addEvent(obj);
+						})
+					},
+					error : function(request, status, error) {
+						alert("경고")
+					}
+				}),
+				headerToolbar : {
+					center : 'addEventButton' // headerToolbar에 버튼을 추가
+			},
+			customButtons : {
+				addEventButton : { // 추가한 버튼 설정
+					text : "일정 추가", // 버튼 내용
+					click : function() { // 버튼 클릭 시 이벤트 추가
+						$("#calendarModal").modal("show"); // modal 나타내기
+
+						$("#addCalendar").off('click').on("click",function() { // modal의 추가 버튼 클릭 시
+									var content = $("#calendar_content").val();
+									var start_date = $("#calendar_start_date").val();
+									var end_date = $("#calendar_end_date").val();
+									//내용 입력 여부 확인
+									if (content == null || content == "") {
+										alert("내용을 입력하세요.");
+									} else if (start_date == ""
+											|| end_date == "") {
+										alert("날짜를 입력하세요.");
+									} else if (new Date(end_date)
+											- new Date(start_date) < 0) { // date 타입으로 변경 후 확인
+										alert("종료일이 시작일보다 먼저입니다.");
+									} else { // 정상적인 입력 시
+										var obj = {
+											"title" : content,
+											"startTime" : start_date,
+											"endTime" : end_date
+										}//전송할 객체 생성
+										$.ajax({
+											url : "/schedule/companyCalenda/list",
+											type : "post",
+											dataType : "JSON",
+											contentType : "application/json",
+											processData : false,
+											data : JSON.stringify(obj),
+											success : function(result) {
+												calendar.addEvent({
+													"title" : content,
+													"start" : moment(start_date).format('YYYY-MM-DD hh:mm:ss'),
+													"end" 	: moment(end_date).format('YYYY-MM-DD hh:mm:ss'),
+													"color"	: "rgb(3, 187, 133)",
+													"cno" 	: result
+				               	                    });
+												$("#calendar_content").val("");
+												$("#calendar_start_date").val("");
+												$("#calendar_end_date").val("");
+												
+											},error:function(jqXHR, textStatus, errorThrown){
+												 alert("에러가 발생 하였습니다." + textStatus + " : " + errorThrown);
+											}
+										});
+
+										$("#calendarModal").modal("hide"); // modal 숨기기
+									}//else
+								});//on
+					}//click-func
+				}
+			},
+			//삭제
+			eventClick: function (info){
+                if(confirm("'"+ info.event.title +"'\n일정을 삭제하시겠습니까 ?")){
+                    // 확인 클릭 시
+                    info.event.remove();
+                    var events = new Array(); // Json 데이터를 받기 위한 배열 선언
+                    var obj = new Object();
+                        obj.title = info.event._def.title;
+                        obj.start = info.event._instance.range.start;
+                        obj.cno = info.event.extendedProps.cno;
+                        events.push(obj);
+
+                    
+                        $.ajax({
+                        	url : "/schedule/companyCalenda/list",
+                            type: "DELETE",
+                            dataType: "json",
+                            data: JSON.stringify(events),
+                            contentType: 'application/json',
+                        });
+                }
+
+            },  
+		});
+		calendar.render();
+	});
+</script>
+</head>
+
+<body class="flex">
+	<th:block th:insert="~{admin/AdminLayout :: header}" />
+	<div style="width: 1350px; height: 1000px; margin: auto;">
+		<div id='calendar'></div>
+	</div>
+	<input type="hidden" id="userMno"
+		th:value="${#authentication.principal.mno}">
+	<div class="modal fade" id="calendarModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">일정을 입력하세요.</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<input type="hidden" id="adminUser" th:value="${#authentication.principal.roles}"> 
+						<label for="taskId" class="col-form-label">일정 내용</label> <input
+							type="text" class="form-control" id="calendar_content"
+							name="calendar_content"> <label for="taskId"
+							class="col-form-label">시작 날짜</label> <input type="date"
+							class="form-control" id="calendar_start_date"
+							name="calendar_start_date"> <label for="taskId"
+							class="col-form-label">종료 날짜</label> <input type="date"
+							class="form-control" id="calendar_end_date"
+							name="calendar_end_date">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-warning" id="addCalendar">추가</button>
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal" id="sprintSettingModalClose">취소</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</body>
+</html>

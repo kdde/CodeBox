@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<th:block th:insert="~{admin/AdminLayout :: head}" />
+<th:block th:insert="~{admin/AdminLayout :: header}" />
+<link rel="stylesheet" href="/css/member/employee_list.css">
+<script type="text/javascript">
+	$(function (){
+		employeeList($(".gnb"));
+	});
+	function employeeList(target){
+		var parentDno = $(target).attr("value");
+		console.log(parentDno);
+		$.ajax({
+			url:`/employee/${parentDno}`,
+			success:function(olTag){
+				$(target).children(".cate-wrap").html(olTag);
+				var sub=$(target).find(".cate");
+				$.each(sub, subCategory);
+			},
+			error:function(){
+				alert("실패");
+			}
+		});
+		
+	}
+	function subCategory(){
+		employeeList($(this));
+	}
+	function onclickDepartment(el){
+		var dno = $(el).next()//부서번호 가져오기
+		if(dno.attr('class')!=3){
+			return;
+		}else{
+			dno=dno.val();//확인 완료
+			$.ajax({
+				url:`/member/departmentMemberList/${dno}`,//링크 생성
+				success:function(result){
+					$(".departmentMemberList").html(result);//리스트를 뛰어줄 위치
+				},
+				error:function(){
+					alert("비정상 작동");
+				}
+			});
+		}
+	}
+</script>
+</head>
+<main style="background-image: url('/image/logo/main.JPG'); background-position: center; background-repeat: no-repeat; width: 100%; height: auto;">
+<body class="flex">
+	<div class="wrap">
+		<img class="emimg" src="/image/logo/logo.png">
+		<ol class="cover">			
+			<li value="0" class="gnb cate">
+				<div class="cate-wrap">
+					<!-- 카테고리 출력 장소 -->
+					<a>내용</a>
+				</div>
+			</li>
+		</ol>
+	</div>
+	<div class="departmentMemberList">
+		
+	</div>
+</body>
+</html>

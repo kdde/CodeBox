@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org" 
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+ 	<th:block th:insert="~{admin/AdminLayout :: head}"/>
+	<link rel="stylesheet" href="/css/default.css">
+	<th:block th:insert="~{admin/AdminLayout :: header}"/>
+	<link rel="stylesheet" href="/css/member/mypage.css">
+	<script type="text/javascript">
+		$(function(){
+			$(".sallist").change(sallaryList);
+		});
+		function sallaryList(){
+			var hid =  $(".hitot").val();
+			var bouns = $('#listsal').val();
+			test=parseInt(bouns);
+			test2=parseInt(hid);
+			var tot = test+test2;
+			//console.log(tot);
+			var total = tot.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+			//alert(tot);
+			$(".totsal").text(total+"원");
+			$(".totSal2").val(tot);
+			//alert(tot);
+		}
+		
+	</script>
+</head>
+<body class="flex">
+   <main style="background-image: url('/image/logo/main.JPG'); background-position: center; background-repeat: no-repeat; width: 100%; height: auto;">
+	    <div>
+	    	<div class="mypage">
+	    		<div class="mypage-info" style="top: 100px; position: relative;">
+	    			<div class="mypage-img">
+	    				<img align="left" th:if="${#strings.isEmpty(detail.profileUrl)}" src="/image/test/profiletest.jpeg">
+					 	<img align="left" th:if="${!#strings.isEmpty(detail.profileUrl)}" th:src="${detail.profileUrl}">
+	    			</div>
+	    			<br>
+	    			<div class="member-info">
+	    				<form th:action="|/salary/department/${detail.mno}|" method="post">
+	    					<ul>
+	    						<li>
+	    							<label for="name">이름 -</label>
+	    							<span>[[${detail.name}]]</span>
+	    						</li>
+	    						<li>
+	    							<label for="mno">사번 -</label>
+	    							<span>[[${detail.mno}]]</span>
+	    						</li>
+	    						<li>
+	    							<label for="phone">전화번호 -</label>
+	    							<span>[[${detail.phone}]]</span>
+	    							
+	    						</li>
+	    						<li>
+	    							<label for="id">id=email -</label>
+	    							<span>[[${detail.email}]]</span>
+	    							
+	    						</li>
+	    						<li>
+	    							<label for="ran">직책 -</label>
+	    							<span>[[${detail.pname}]]</span>
+	    						</li>
+	    					</ul>
+	    				</form>
+	    				<div>
+	    				<form th:action="|/salary/department/${detail.mno}|" method="post">
+		    				<select name="dno">
+		    				<th:block th:each="department:${department}">
+		    					<option th:value="${department.dno}">[[${department.dname}]]</option>
+		    					</th:block>
+		    				</select>
+		    				<select name="pno">
+		    				<th:block th:each="position:${position}">
+		    					<option th:value="${position.pno}">[[${position.pName}]]</option>
+		    					</th:block>
+		    				</select>
+		    				<button>등록</button>
+		    			</form>
+		    			</div>
+		    		</div>
+	    		</div>
+	    	</div>
+		</div>
+		<div class="salary-info" style="top: 100px; position: relative;">
+		<p>해당직원 급여 정보 및 관리</p>
+		<form action="/salary/salary" method="post">
+			<input type="hidden" name="mno" th:value="${detail.mno}">
+			<table>
+				<thead>
+					<!-- thymleaf사용 -->
+					<tr class="salary-info-1">
+						<td>사원번호</td>
+						<td>이름</td>
+						<td>직책</td>
+						<td>기본급여</td>
+						<td>세금</td>
+						<td>연차보너스</td>
+						<td>이번 달 급여</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>[[${detail.mno}]]</td>
+						<td>[[${detail.name}]]</td>
+						<td>[[${detail.pname}]]</td>
+						<td data-th-text="${#numbers.formatInteger(detail.normalSalary, 3, 'COMMA') + '원'}">[[${detail.normalSalary}]]</td>
+						<td data-th-text="${#numbers.formatInteger(detail.minSal, 3, 'COMMA') + '원'}">[[${detail.minSal}]]</td>
+						<td>
+							<select id="listsal" class="sallist" name="plSal">
+								<option value="0">없음 : [[${detail.none}]]</option>
+								<option th:value="${detail.sal1y}">1년차 : [[${detail.sal1y}]] </option>
+								<option th:value="${detail.sal2y}">2년차 : [[${detail.sal2y}]]</option>
+								<option th:value="${detail.sal3y}">3년차 : [[${detail.sal3y}]]</option>
+								<option th:value="${detail.sal4y}">4년차 : [[${detail.sal4y}]]</option>
+								<option th:value="${detail.sal5y}">5년차 : [[${detail.sal5y}]]</option>
+							</select>
+						</td>
+						<input type="hidden" class="hitot" th:value="${detail.minSalTot}" />
+						<input type="hidden" name="totSal" class="totSal2" th:value="${detail.minSalTot}" />
+						<td class="totsal" data-th-text="${#numbers.formatInteger(detail.minSalTot, 3, 'COMMA') + '원'}"></td>
+					</tr>
+				</tbody>
+			</table>
+			<button>등록</button>
+		</form>
+		</div>
+    </main>
+</body>
+</html>

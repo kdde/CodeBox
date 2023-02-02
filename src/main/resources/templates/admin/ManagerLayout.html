@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Page</title>
+	<!-- 추가 head 정보를 replace 할 위치 -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="/css/commons/common.css">
+	<link rel="stylesheet" href="/css/admin/admin-layout.css">
+<style type="text/css">
+	.user-profile{
+		display:block;
+		width:120px;
+		height: 120px;
+		margin:0 auto;
+		background-repeat: no-repeat;
+		background-size: contain;
+		background-position: center;
+		border-radius: 50%;
+	}
+</style>
+</head>
+<body id="layout-admin">
+    <header>
+   		<div class="wrap">
+   			<ul>
+   				<li>
+   					<a href="/adminlist">
+   						<img src="/image/logo/logo.png" style="width: 190px; height: 120px; border-bottom: 1px solid white;">
+   					</a>
+   				</li>
+   			</ul>
+   				<div style="text-align: center;">
+	   				<div th:each="profile : ${#authentication.principal.profile}">
+	   					<div th:if="${profile} == null">
+	   						<img src="/image/test/profiletest.jpeg" style="width: 120px; border-radius: 50%; padding-top: 10px;">
+	   					</div>
+	   					<div th:if="${profile} != null">  						
+	   						<p class = "user-profile" th:style="|background-image: url('${profile.url}${profile.newName}');|"></p>
+	   					</div>
+	   				</div>
+   					<!-- <img src="/image/test/profiletest.jpeg" style="width: 120px; border-radius: 50%; padding-top: 10px;"> -->
+   					<!--접속한 사원의 이미지-->
+   					<p th:text="${#authentication.principal.name}"></p>
+   					<p th:text="${#authentication.principal.mno}"></p>
+   				</div>
+   				<div style="text-align: center;">
+   					<a th:href="|/mypage/info/${#authentication.principal.mno}|" class="test">내정보</a>
+   					<a href="/login" style="font-size: 11px;">로그아웃</a>
+				</div>
+			<ul>
+   				<li>
+   					<dl>
+   						<dt>관리자 메뉴</dt>
+   						<dd><a href="/signup">사원등록(관리자가 등록)</a></dd>
+   						<dd><a href="/admin/departmentRegist">부서추가*등록</a></dd>
+   						<dd><a href="/approval/sure">결재승인</a></dd>
+   						<dd><a href="/">공지사항 등록 수정 삭제</a></dd>
+   						<dd><a href="/">자유게시판 삭제</a></dd>
+   						<dd><a href="/admin/position">직책+기본급 등록</a></dd>
+   						<dd><a href="/admin/boards-registration">공지사항&자유게시물 등록</a></dd>
+   					</dl>
+   				</li>
+   			</ul>
+   			<ul>
+   				<li>
+   					<dl>
+   						<dt>직원 메뉴</dt>
+   						<dd><a href="/admin">기본페이지</a></dd>
+   					</dl>
+   				</li>
+   			</ul>
+   			<br>
+   			<div style="text-align: center;">
+   				<a href="https://greengames.ncpworkplace.com/authn/oauthLogin?response_type=code&client_id=VATI7DtQ5OVCR1YIKWy5&redirect_uri=https%3A%2F%2Fauth.worksmobile.com%2Fview%2Foauth%2Fsso%2Fauthorization%2F6PLV2NX3&worksId=greengames@greengames.by-works.com">네이버 클라우드</a>
+   			</div>
+   		</div>
+   	</header>
+</body>
+</html>

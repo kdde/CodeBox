@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>로그인</title>
+<link rel="stylesheet" href="/css/member/login.css">
+</head>
+<body>
+
+	<div class="wrap view-size-m">
+		<section>
+			<div id="main_wrapper">
+				<div class="logo_box">
+			        <a href="/" class="logo_link">
+			        	<img src="image/logo/logo.png" alt="logo"/>
+			        </a>
+		        </div>
+			
+				<h2>로그인</h2>
+				<form action="/signin" method="post" id="login_form">
+					<input type="text" id="id" name="id" size="20" placeholder="아이디를 입력해주세요"><br> 
+					<input type="password" id="password" name="pass" size="20" placeholder="비밀번호를 입력해주세요"><br>
+					<div id="id_pw_search">
+						<a href="#">아이디 찾기</a>&nbsp;&nbsp;|&nbsp;
+						<a href="#">비밀번호 찾기</a>
+					</div>
+					<br> 
+					<input type="submit" value="로그인"> 
+					<a href="/signup" id="signup-button">회원가입</a>
+				</form>
+			</div>
+		</section>
+	</div>
+</body>
+</html>

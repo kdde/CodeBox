@@ -1,0 +1,94 @@
+@charset "UTF-8";
+@import url("reset.css");
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap');
+
+body{
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+.flex{display: flex;}
+.row{flex-direction: row;}
+.column{flex-direction: column;}
+.center{justify-content: center;}
+.between{justify-content: space-between;}
+.around{justify-content: space-around;}
+.end{justify-content: flex-end;}
+.start{justify-content: flex-start;}
+.row-reverse{flex-flow: row-reverse wrap}
+
+.font-zero{
+	font-size: 0;
+}
+.view-size{
+	width: 1200px;
+	margin: 0 auto;
+}
+.view-size-m{
+	width: 450px;
+	margin: 0 auto;
+}
+.page-tit{
+    padding: 50px 0;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 42px;
+    text-align: center;
+}
+.box-style-common:focus{
+	border: 1px solid #6ba543;
+	outline: 1px solid #6ba543;;
+}
+.box-style-common{
+	width: 100%;
+	border-radius: 2px;
+	padding: 1.5em 2em;
+	border: 1px solid #a9a9a9;
+}
+.btn-style-common{
+	width:100%;
+	background-color: #6ba543;
+	border-radius: 2px;
+	padding: 1.5em 0;
+	color: #fff;
+	font-weight: 700;
+}
+
+.btn-style1{
+	border: 1px solid #a9a9a9;
+	border-radius: 10px;
+}
+.btn{
+	border: 1px solid #27c700;
+	background-color: #fff;
+	cursor: pointer;
+	color: #27c700;
+}
+
+/* ////모든체크박스 + label인경우 사용자 이미지를 박스이미지로 적용할때 ///////////////////////// */
+input[type=checkbox]{
+	display: none;
+}
+input[type=checkbox]:checked + label::before{
+	background-color: #6ba543;
+}
+input[type=checkbox] + label::before{
+	content:"";
+	display:inline-block;
+	width: 18px;
+	height:18px;
+	border-radius:50%;
+	background-image: url("/images/icon/img_order_checkW.png");
+	background-size:70%;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-color: rgba(0,0,0,0.25);
+	position: relative;
+	top:2px;
+	margin-right: 5px;
+}
+
+main>.wrap:not(.exist-title){
+	padding: 40px 0;
+}
+
+

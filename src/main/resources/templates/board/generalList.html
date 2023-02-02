@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+ 	<th:block th:insert="~{admin/AdminLayout :: head}"/>
+	<link rel="stylesheet" href="/css/commons/common.css">
+	<link rel="stylesheet" href="/css/board/board-list.css">
+</head>
+<script type="text/javascript">
+
+/*  ajax활용하는 검색방법
+
+	function search(){
+		
+		var keyword = $(".tit").val();   //검색어,input의 class="tit"
+		
+		$.ajax({
+			url: `/boards/search`, 
+			data:{keyword : keyword}, //여기 설명이 필요합니다......
+			success: function(result){
+				$(".search-page").html(result); //html파일로 보여준다
+			},
+			error: function(){
+			alert("오류발생");
+			console.log(keyword);
+			}
+		});
+		
+	}; */
+	
+
+</script>
+<body class="flex">
+	<th:block th:insert="~{admin/AdminLayout :: header}"/>
+    	<main class="board-list">
+	    	<h1>자유 게시판</h1>
+	    	<div class="wrap">
+	    		<div>
+					<a class=btn href="/general/boards-registration">글쓰기</a>
+				</div>
+		   		<p class="title">자유게시판</p>
+				<table>
+	    			<tr class="board-title">
+	    				<td>No</td>
+	    				<td>제목</td>
+	    				<td>조회수</td>
+	    				<td>작성자</td>
+	    				<td>작성일</td>
+	    			</tr>
+	    			
+	    			<tbody class="search-page"> 
+		    			<tr th:each="dto : ${list2}">
+		    				<td th:text="${dto.bno}">No</td>
+		    				<td><a th:href="|/boards/${dto.bno}|">[[${dto.title}]]</a></td>
+		    				<td th:text="${dto.readCount}">조회수</td>
+		    				<td>[[${writerMemMap['__${dto.writerId}__']}]]</td>
+		    				<td>
+		    					<span
+		    					th:text="${dto.updatedDate.toLocalDate()}">날짜</span>
+		    				</td>
+		    			</tr>
+	    			</tbody>
+	    			<tr th:if="${p2.getNumberOfElements()==0}">
+	    				<td colspan="5">존재하지 않는페이지</td>
+	    			</tr>
+	    		</table>
+    			<div class="page_wrap">
+  					<div class="page_nation">
+		    			<div th:if="${p2.getNumberOfElements()>0}">
+		    				<a class="arrow prev" th:if="${p2.hasPrevious()}" th:href="|/boards?page=${nowPage-1}|">&lt;</a>
+		    				
+		    				<th:block th:if="${totPage>=6}">
+		    				<th:block th:if="${nowPage <= 4}" th:each="p2:${#numbers.sequence(1, 7)}">
+		    					<a th:if="${p2 != nowPage}" th:href="@{boards?(page=${p2})}" th:text="${p2}"></a>
+		    					<a th:if="${p2 == nowPage}" th:text="${p2}" class="active"></a>
+		    				</th:block>
+		    				
+		    				<th:block th:if="${nowPage>4 && nowPage<totPage-2}" th:each="p2:${#numbers.sequence(startPage, endPage)}">
+		    					<a th:if="${p2 != nowPage}" th:href="@{boards?(page=${p2})}" th:text="${p2}"></a>
+		    					<a th:if="${p2 == nowPage}" th:text="${p2}" class="active"></a>
+		    				</th:block>
+		    				
+		    				<th:block th:if="${nowPage >= totPage-2}" th:each="p2:${#numbers.sequence(nowPage-(6-(totPage-nowPage)), totPage)}">
+		    					<a th:if="${p2 != nowPage}" th:href="@{boards?(page=${p2})}" th:text="${p2}"></a>
+		    					<a th:if="${p2 == nowPage}" th:text="${p2}" class="active"></a>
+		    				</th:block>
+		    				</th:block>
+		    				
+		    				<th:block th:if="${totPage<6}">
+		    				<th:block th:each="p2:${#numbers.sequence(startPage, endPage)}">
+		    					<a th:if="${p2 != nowPage}" th:href="@{boards?(page=${p2})}" th:text="${p2}"></a>
+		    					<a th:if="${p2 == nowPage}" th:text="${p2}" class="active"></a>
+		    				</th:block>
+		    				</th:block>	
+		    						    				
+		    				<a class="arrow next" th:if="${p2.hasNext()}" th:href="|/boards?page=${nowPage+1}|">&gt;</a>
+		    			</div>
+		    		</div>
+		    	</div>
+				<form action="/boards/search" method="GET">
+				    <div class="btn-group" role="group" aria-label="Basic example">
+				        <input class="tit" name="keyword" type="text" placeholder="검색어를 입력해주세요">
+				        <button class="btn2">검색</button>
+				    </div>
+				</form>
+				<!-- 검색 ajax써보기
+    				<div class="btn-group">
+        				<input class="tit" name="keyword" type="text" placeholder="검색어를 입력해주세요">
+        				<button class="btn2" onclick="search()">검색</button>
+    				</div> -->
+		   	</div>
+ 		</main>
+</body>
+</html>

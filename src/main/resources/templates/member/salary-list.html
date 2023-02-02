@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org" >
+<head>
+ 	<th:block th:insert="~{admin/AdminLayout :: head}"/>
+	<link rel="stylesheet" href="/css/commons/common.css">
+	<th:block th:insert="~{admin/AdminLayout :: header}"/>
+	<link rel="stylesheet" href="/css/member/mypage.css">
+	<link rel="stylesheet" href="/css/member/salarylist.css">
+</head>
+<body class="flex">
+    <main style="background-image: url('/image/logo/main.JPG'); background-position: center; background-repeat: no-repeat; width: 100%; height: auto;">
+	    <div>
+	    	<div class="mypage">
+	    		<h2>급여관리 리스트</h2>
+	    		<div class="wrap-title  ">
+	    			<br>
+	    			<div class="wrap flex emp-list">
+	    			<div class="salary-list" th:each="dto : ${srlist}">
+		    			<a th:href="|/salaryinfo/${dto.mno}|">
+		    				<img align="center" th:if="${#strings.isEmpty(dto.profileUrl)}" src="/image/test/profiletest.jpeg">
+					 		<img align="center" th:if="${!#strings.isEmpty(dto.profileUrl)}" th:src="${dto.profileUrl}">
+		    			</a>
+		    			<br>
+		    			<ul>
+	    					<li>
+	    						<label>사번 : </label>
+	    						<span>[[${dto.mno}]]</span>
+	    					</li>
+	    					<li>
+	    						<label>이름 : </label>
+	    						<span>[[${dto.name}]]</span>
+	    					</li>
+	    					<li>
+	    						<label>이메일 : </label>
+	    						<span>[[${dto.email}]]</span>
+	    					</li>
+	    					<li>
+	    						<label>연락처 : </label>
+	    						<span>[[${dto.phone}]]</span>
+	    					</li>
+	    					<li>
+	    						<label>직책 : </label>
+	    						<span>[[${dto.pname}]]</span>
+	    					</li>
+	    				</ul>
+	    			</div>
+	    			</div>
+	    		</div>
+	    	</div>
+	    	<div>
+	    		
+	    	</div>
+	    </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+ 	<th:block th:insert="~{admin/AdminLayout :: head}"/>
+	<link rel="stylesheet" href="/css/commons/common.css">
+	<link rel="stylesheet" href="/css/board/board-list.css">
+</head>
+<body class="flex">
+	<th:block th:insert="~{admin/AdminLayout :: header}"/>
+    	<main class="board-list">
+	    	<h1>자유 게시판</h1>
+	    	<div class="wrap">
+	    		<div>
+					<a class=btn href="/general/boards-registration">글쓰기</a>
+				</div>
+		   		<p class="title">자유게시판</p>
+				<table>
+	    			<tr class="board-title">
+	    				<td>No</td>
+	    				<td>제목</td>
+	    				<td>조회수</td>
+	    				<td>작성자</td>
+	    				<td>작성일</td>
+	    			</tr>
+	    			
+	    			<tbody class="search-page"> 
+		    			<tr th:each="dto : ${searchList}">
+		    				<td th:text="${dto.bno}">No</td>
+		    				<td><a th:href="|/boards/${dto.bno}|">[[${dto.title}]]</a></td>
+		    				<td th:text="${dto.readCount}">조회수</td>
+		    				<td>[[${dto.writerId}]]</td>
+		    				<td>
+		    					<span
+		    					th:text="${dto.updatedDate.toLocalDate()}">날짜</span>
+		    				</td>
+		    			</tr>
+	    			</tbody>
+	     			<tr th:if="${p.getNumberOfElements()==0}">
+	    				<td colspan="5">존재하지 않는페이지</td>
+	    			</tr>
+	    		</table>
+    			<div class="page_wrap">
+  					<div class="page_nation">
+		    			<div th:if="${p.getNumberOfElements()>0}">
+		    				<a class="arrow prev" th:if="${p.hasPrevious()}" th:href="|/boards/search?keyword=${keyword}&page=${p.getNumber()}|">&lt;</a>
+		    				
+		    				<th:block th:if="${totPage>=6}">
+		    				<th:block th:if="${nowPage <= 4}" th:each="p:${#numbers.sequence(1, nowPage+(6+(startPage-nowPage)))}">
+		    					<a th:if="${p != nowPage}" th:href="@{search(keyword=${keyword},page=${p})}" th:text="${p}"></a>
+		    					<a th:if="${p == nowPage}" th:text="${p}" class="active"></a>
+		    				</th:block>
+		    				<th:block th:if="${nowPage>4 && nowPage<totPage-2}" th:each="p:${#numbers.sequence(startPage, endPage)}">
+		    					<a th:if="${p != nowPage}" th:href="@{search(keyword=${keyword},page=${p})}" th:text="${p}"></a>
+		    					<a th:if="${p == nowPage}" th:text="${p}" class="active"></a>
+		    				</th:block>
+		    				<th:block th:if="${nowPage >= totPage-2}" th:each="p:${#numbers.sequence(nowPage-(6-(totPage-nowPage)), totPage)}">
+		    					<a th:if="${p != nowPage}" th:href="@{search(keyword=${keyword},page=${p})}" th:text="${p}"></a>    <!-- 받는 변수 2개일때  -->
+		    					<a th:if="${p == nowPage}" th:text="${p}" class="active"></a>
+		    				</th:block>
+		    				</th:block>
+		    				
+		    				<th:block th:if="${totPage<6}">
+		    				<th:block th:each="p:${#numbers.sequence(startPage, endPage)}">
+		    					<a th:if="${p != nowPage}" th:href="@{search(keyword=${keyword},page=${p})}" th:text="${p}"></a>
+		    					<a th:if="${p == nowPage}" th:text="${p}" class="active"></a>
+		    				</th:block>
+		    				</th:block>				
+		    				
+		    				<a class="arrow next" th:if="${p.hasNext()}" th:href="|/boards/search?keyword=${keyword}&page=${p.getNumber()+2}|">&gt;</a>
+		    			</div>
+		    		</div>
+		    	</div>
+				<form action="/boards/search" method="GET">
+				    <div class="btn-group" role="group" aria-label="Basic example">
+				        <input class="tit" name="keyword" type="text" placeholder="검색어를 입력해주세요">
+				        <button class="btn2">검색</button>
+				    </div>
+				</form>
+		   	</div>
+ 		</main>
+</body>
+</html>

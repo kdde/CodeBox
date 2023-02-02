@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<link rel="stylesheet" href="/css/member/mypage.css">
+	<link rel="stylesheet" href="/css/member/salarylist.css">
+</head>
+<body class="flex">
+    <main>
+	    <div>
+	    	<div class="mypage">
+	    		<div class="wrap-title flex">
+	    			<div class="salary-list" th:each="dto : ${srlist}">
+		    				<img align="left" th:if="${#strings.isEmpty(dto.profileUrl)}" src="/image/test/profiletest.jpeg">
+					 		<img align="left" th:if="${!#strings.isEmpty(dto.profileUrl)}" th:src="${dto.profileUrl}">
+		    			<br>
+		    			<ul>
+	    					<li>
+	    						<label>사번 : </label>
+	    						<span>[[${dto.mno}]]</span>
+	    					</li>
+	    					<li>
+	    						<label>이름 : </label>
+	    						<span>[[${dto.name}]]</span>
+	    					</li>
+	    					<li>
+	    						<label>이메일 : </label>
+	    						<span>[[${dto.email}]]</span>
+	    					</li>
+	    					<li>
+	    						<label>연락처 : </label>
+	    						<span>[[${dto.phone}]]</span>
+	    					</li>
+	    					<li>
+	    						<label>부서 : </label>
+	    						<span>[[${dto.dName}]]</span>
+	    					</li>
+	    				</ul>
+	    			</div>
+	    		</div>
+	    	</div>
+	    </div>
+    </main>
+</body>
+</html>

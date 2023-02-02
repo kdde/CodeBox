@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:insert="~{admin/AdminLayout :: head}"/>
+	<link rel="stylesheet" href="/css/commons/common.css">
+	<link rel="stylesheet" href="/css/board/detail.css">
+    <style type="text/css">
+    	#edit-mode{display: none;}
+    </style>
+    <script type="text/javascript">
+    $(function(){
+    	$("#btn-edit").click(editMode);
+    	$("#btn-cancel").click(function(){
+    		$("#edit-mode").hide();
+        	$("#def-mode").show();
+    	});
+    });
+   
+    
+    function editMode(){
+    	$("#edit-mode").show();
+    	$("#def-mode").hide();
+    }
+    
+    </script>
+</head>
+<body class="flex">
+	<th:block th:insert="~{admin/AdminLayout :: header}"/>
+    <main>
+    	<h1>메인영역</h1>
+    	<div class="wrap b-view-size">
+    	
+    		<!-- ROLE_USER 인경우만 -->
+    		<div sec:authorize="hasRole('ROLE_USER')">
+    			<!-- 현재유저의 username = 작성자ID일치한 경우 수정버튼 활성화 -->
+    			<!-- 현재 #authentication.name , #authentication.principal. 일치하는데이터 -->
+    			<span th:if="${#authentication.name == detail2.writerId}">
+    				<button type="button" id="btn-edit">게시물 수정</button>
+    			</span>
+    		</div>
+    		
+    		<div sec:authorize="hasRole('ROLE_USER')">
+    			<th:block th:if="${#authentication.name == detail2.writerId or #authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+    			<form th:action="|/boards/${detail2.bno}|" method="post">
+					<input type="hidden" name="_method" value="DELETE">
+					<button>게시물 삭제</button>
+				</form>
+				</th:block>
+    		</div>
+    		<form id="edit-mode" th:action="|/boards/${detail2.bno}|" method="post">
+	    		<div class="section no">
+    				<span class="title">No.</span>
+    				<span th:text="${detail2.bno}"></span>
+    			</div>
+    			<div class="flex">
+    				<div class="section">
+		    			<span class="title">작성일</span>
+		    				<span>
+	    					<span
+	    					th:text="${detail2.createdDate.toLocalDate()}">날짜</span>
+	    					<span 
+	    					th:text="${#temporals.format(detail2.createdDate, 'HH시 mm분 ss초')}">시간</span>
+	    					</span>
+		    		</div>
+		    		<div class="section update_date">
+		    				<span class="title">최종수정일</span>
+		    				<span>
+	    					<span
+	    					th:text="${detail2.updatedDate.toLocalDate()}">날짜</span>
+	    					<span
+	    					th:text="${#temporals.format(detail2.updatedDate, 'HH시 mm분 ss초')}">시간</span>
+	    					</span>
+	    			</div>
+	    		</div>
+	    		<div class="section">
+	    				<span class="title">작성자</span>
+	    				<span  th:text="${writerName}"></span>
+	    		</div>
+	    		<div class="section">
+	    				<span class="title">조회수</span>
+	    				<span  th:text="${detail2.readCount}"></span>
+	    		</div>
+    			<div class="section">
+    				<span class="title">제목</span>
+    				<span  th:text="${detail2.title}"></span>
+    				<input type="hidden" name="title" th:value="${detail2.title}" />
+    			</div>
+	    			<div class="section">
+	    				<span>내용</span>
+	    				<span >
+	    					<textarea rows="8" cols="70" name="content">[[${detail2.content}]]</textarea>
+	    				</span>
+	    			</div>
+	    			<div>
+	    				<span>
+	    					<input type="hidden" name="_method" value="PUT">
+	    					<button type="submit">수정완료</button>
+	    					<button type="button" id="btn-cancel">취소</button>
+	    				</span>
+	    			</div>
+    		</form>
+    		<!-- //////////////////////////////////////// -->
+    		<div id="def-mode">
+    			<div class="section no">
+    				<span class="title">No.</span>
+    				<span th:text="${detail2.bno}"></span>
+    			</div>
+    			<div class="flex">
+    				<div class="section">
+		    			<span class="title">작성일</span>
+		    				<span>
+	    					<span
+	    					th:text="${detail2.createdDate.toLocalDate()}">날짜</span>
+	    					<span 
+	    					th:text="${#temporals.format(detail2.createdDate, 'HH시 mm분 ss초')}">시간</span>
+	    					</span>
+		    		</div>
+		    		<div class="section update_date">
+		    				<span class="title">최종수정일</span>
+		    				<span>
+	    					<span
+	    					th:text="${detail2.updatedDate.toLocalDate()}">날짜</span>
+	    					<span
+	    					th:text="${#temporals.format(detail2.updatedDate, 'HH시 mm분 ss초')}">시간</span>
+	    					</span>
+	    			</div>
+	    		</div>
+	    		<div class="section">
+	    				<span class="title">작성자</span>
+	    				<span  th:text="${writerName}"></span>
+	    		</div>
+	    		<div class="section">
+	    				<span class="title">조회수</span>
+	    				<span  th:text="${detail2.readCount}"></span>
+	    		</div>
+    			<div class="section">
+    				<span class="title">제목</span>
+    				<span  th:text="${detail2.title}"></span>
+    			</div>
+    			<div class="content section">
+    				<span class="title">내용</span>
+    				<span th:utext="${detail2.content}"></span>
+    			</div>
+    		</div>
+    	</div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org" >
+<head>
+ 	<th:block th:insert="~{admin/AdminLayout :: head}"/>
+	<link rel="stylesheet" href="/css/default.css">
+	<link rel="stylesheet" href="/css/admin/ggAdmin.css">
+	<th:block th:insert="~{admin/AdminLayout :: header}"/>
+
+	<script type="text/javascript">
+	$(function(){
+		
+	});
+	function already(el){
+		var btnType = $(el).text();
+		
+		alert("이미 출근했습니다.");
+		
+	}
+	//출근 버튼 누르면 출근시간 보여주고 db저장
+	function btnOnclick(el){
+		var mno =$(".mno").val();
+		var type = $(el).text();
+		var plag = 0;
+		var goSpan = $(".goSpan").text();
+		if(type =="출근"){
+			plag = 1;
+		}else{
+			if(goSpan=="출근 시간"){
+				alert("출근을 먼저 해주세요");
+				return;
+			}
+		}
+		$.ajax({
+			url:`/admin/commute/btn/${mno}`,
+			type:"post",
+			data:{plag:plag},
+			success:function(result){
+				if(plag==1){
+					$(".goSpan").text(result);
+				}else{
+					$(".offSpan").text(result);
+				}
+				window.location.reload();
+			},
+			error:function(){
+				alert("go error");
+				
+			}
+		});
+		
+	}
+	//퇴근 버튼 누르면 출근시간 수정시간 보여주고 db업데이트
+
+	</script>
+
+</head>
+<body class="flex">
+    <main>
+    	<div class="wrap">
+    		<input class="mno" type="hidden" th:value="${#authentication.principal.mno}">
+    		<br><br>
+       		<div class="flex commuteBox"><!-- 네모네모 상자 -->
+    			<div class="Box"><!-- 출근 상자 -->
+    				<span class="goSpan" th:text="${gtime}"></span><br>
+    				<button class="go" onclick="already(this)" th:if="${gtime==otime}">출근</button>
+    				<button class="go" onclick="btnOnclick(this)" th:if="${gtime!=otime}">출근</button>
+    			</div>
+    			<div class="Box"><!-- 퇴근 상자 -->
+    				<span class="offSpan" th:text="퇴근시간" th:if="${gtime==otime}"></span>
+    				<span class="offSpan" th:text="${otime}" th:if="${gtime!=otime}"></span><br>
+    				<button class="off" onclick="btnOnclick(this)">퇴근</button>
+    			</div>
+    		</div>
+    	</div>
+    	<div class="commuteList_wrap">	    	
+    	<table class="commuteListTable">
+				<thead class="commutehead">
+					<tr>
+						<td>이름</td>
+						<td>날짜</td>
+						<td>출근시간</td>
+						<td>퇴근시간</td>
+						<td>근무형태</td>
+					</tr>				
+				</thead>
+				<tbody class="commuteList">
+					<tr th:each="lists : ${list}" th:if="${!#lists.isEmpty(list)}">
+						<td th:text="${lists.member.name}">이름</td>
+						<td th:text="${lists.today}">날짜</td>
+						<td th:text="${lists.gTime}">출근시간</td>
+					
+						<td th:if="${lists.oTime==lists.gTime}">퇴근시간</td>
+						<td th:text="${lists.oTime}"
+							th:if="${lists.oTime!=lists.gTime}">퇴근시간</td>
+					
+						<td th:text="${lists.cType}">근무형태</td>
+					</tr>
+					<tr th:if="${#lists.isEmpty(list)}">
+						<td>값이 없습니다.</td>
+					</tr>
+					
+				</tbody>
+			</table>
+			<div class="pageNumber" th:if="${p.getNumberOfElements()>0}">
+				<a th:if="${p.hasPrevious()}"
+					th:href="|/admin?page=${p.getNumber()}|">&lt;</a>
+
+				<th:block th:each="p:${#numbers.sequence(startPage, endPage)}">
+					<a th:if="${p != nowPage}" th:href="@{admin?(page=${p})}"
+						th:text="${p}"></a>
+					<a th:if="${p == nowPage}" th:text="${p}" class="active"></a>
+				</th:block>
+				<!-- th:href="@{notice-boards?(page=${p})}" -->
+				<a th:if="${p.hasNext()}" th:href="|/admin?page=${p.getNumber()+2}|">&gt;</a>
+			</div>
+		</div>
+		<div class="wrap gameInfo">
+			<p class="date">
+				<script>
+					let today = new Date();
+					let y = today.getFullYear();
+					let m = today.getMonth()+1;
+					let d = today.getDate();
+					document.write( y +'년 '+ m +'월 ' + d +'일 '+' : 오늘의 게임정보');
+				</script>
+			</p>
+			<br>
+			<iframe width="560" height="320" src="https://www.youtube.com/embed/1DbGzeN2FGo" title="2023 시즌 | LoL 개발 현황 업데이트 - 리그 오브 레전드" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+		</div>
+		<div>
+			<ul>
+				<li>
+					<form action="https://auth.worksmobile.com/oauth2/v2.0/authorize" method="get">
+						<input type="hidden" name="client_id" value="E7PDGFwvOh7UsDt2rWE9">
+						<input type="hidden" name="redirect_uri" value="http://ec2-3-39-97-4.ap-northeast-2.compute.amazonaws.com:8080/naver/auth2">
+						<input type="hidden" name="scope" value="directory,directory.read,orgunit,orgunit.read">
+						<input type="hidden" name="response_type" value="code">
+						<input type="hidden" name="state" value="test">
+						<button>조직인증</button>
+					</form>
+				</li>
+			</ul>
+		</div>
+   </main>
+</body>
+</html>

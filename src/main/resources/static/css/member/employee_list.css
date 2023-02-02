@@ -1,0 +1,66 @@
+@charset "UTF-8";
+body{
+	-ms-overflow-style: none;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+.emimg{
+	width: 250px;
+	position: absolute;
+	top: 3%;
+	left: 50%;
+
+}
+.cate-ol{
+	margin: 10px;
+}
+
+.cover{
+	text-align: center;
+}
+
+
+.tree-2 > p{
+	font-size: 15px;
+	letter-spacing: 2px;
+}
+.tree-2{
+	margin: 10px;
+	text-align: center;
+	font-weight: bold;
+	
+}
+.cate-1{
+	color: #333333;
+	letter-spacing: 5px;
+	position: absolute;
+	top: 15%;
+	left: 250px;
+	
+}
+.cate-2{
+	margin:  15px;
+	border: 2px solid yellow;
+	border-radius: 20px;
+	background-color:#90ee90;
+	color: #333333;
+	
+}
+.cate-3{
+	margin: 10px;
+	border: 2px solid yellow;
+	border-radius: 10px;
+	background-color:  #03bb85;
+	color: #FAFAD2;
+	letter-spacing: 2px;
+	box-shadow:3px 3px 0px 0px #ffffe0 ;
+}
+
+.departmentMemberList{
+	position: absolute;
+	top: 50%;
+	left: 15%;
+	scrollbar-width: none;
+	width: auto;
+}

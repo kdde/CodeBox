@@ -1,0 +1,14 @@
+button { 
+	cursor:pointer;
+	width: 409px;
+	height: 50px;
+	font-size: 16px;
+	font-weight: bold; margin-bottom : 10px;
+	border: 1px solid #00af85;
+	background-color: #00af85;
+	color: #fff;
+	margin-bottom: 10px;
+}
+a{
+	color:white;
+}

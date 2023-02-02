@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+ 	<th:block th:insert="~{admin/AdminLayout :: head}"/>
+	<link rel="stylesheet" href="/css/commons/common.css">
+	<link rel="stylesheet" href="/css/board/reg.css">
+
+
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<!-- include summernote css/js -->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<script type="text/javascript">
+	var idx=1;
+	
+	$(document).ready(function () {
+	    $('#summernote').summernote({
+	        placeholder: '내용을 작성하세요',
+	        width: 1000,
+	        height: 300,
+	       
+	    });
+
+	    
+	});
+	
+	function btn_click(str){                             
+        if(str=="notice"){                                 
+            frm.action="/notice-boards";      
+        } else if(str=="normal"){      
+            frm.action="/boards";      
+        }
+	}
+	
+    
+    function bimgChanged(el) {
+    	
+    	var fileData=$(el)[0].files[0];
+    	
+    	console.log(fileData);
+    	
+    	var formData = new FormData()
+		formData.append('bimg', fileData);
+    	
+    	$.ajax({
+    		url: "/admin-notice/temp-upload",
+    		type: "post",
+    		contentType: false,
+    		processData: false,
+    		data:formData,
+    		success:function(map){ /* 서버에 업로드이후 url을 리턴 -> 파라미터에 전달 */
+    			console.log(map);
+    		
+    			$(el).siblings(".img").css("background-image", "url("+map.url+")");
+    			$(el).siblings(".newName").val(map.newName);
+    			$(el).siblings(".orgName").val(map.orgName);
+    			$(el).siblings(".size").val(map.size);
+    			//대표 이미지와 추가 이미지 구분
+    			if($(el).prop("id") == "defimg")return;//대표이미지인 경우 여기서 함수종료
+    			
+    			//추가이미지인경우 아래문장실행
+    			if(idx < 3)addTag();
+    			
+    			
+    		}	
+    	});
+    }
+    
+    
+    function addTag() {
+    	var tag=`
+   		<span class="addimg" style="display:inline-block; width: 300px;">
+   			<span class="form-tit" style="display:inline-block; width: 100px;">추가 이미지</span>
+    		<label class="img" for="addimg_${idx}" > + </label>
+    		<input id="addimg_${idx}" class="gimg" type="file" name="gimg" onchange="bimgChanged(this)">
+			<input type="hidden" class="newName" name="newName">
+			<input type="hidden" class="orgName" name="orgName">
+    	</span>
+   		`
+    	//클래스이름이 addimg인 모든 태그 선택자중 마지막 태그 뒤에 삽입
+    	$(".addimg").last().after(tag);
+    	idx++;
+    }
+	
+        
+</script>
+</head>
+<body class="flex">
+    <th:block th:insert="~{admin/AdminLayout :: header}"/>
+    <main>
+    	<h1>메인컨텐츠</h1>
+    	<div class="wrap">
+		<p class="pagetitle">게시물 작성</p>
+    		<form class="form" method="post" name="frm">
+	    		<div class="all">
+	    			<div class="tit-row">
+	    				<span class="form-tit tit-tit">제목</span>
+	    				<span><input type="text" name="title" placeholder="제목을 입력하세요"></span>
+	    			</div>
+	    			<div class="dep1">
+	    				<span style="display:inline-block; width: 280px; padding-right: 20px;">
+	    					<span class="form-tit" style="display:inline-block; width: 60px;">이미지</span>
+	    					<span>
+	    						<label class="img" for="defimg">+</label>
+	    						<input style="width: 250px;" id="defimg" class="bimg" type="file" name="bimg" onchange="bimgChanged(this)">
+	    						<input style="width: 250px;" type="hidden" class="newName" name="newName">
+	    						<input style="width: 250px;" type="hidden" class="orgName" name="orgName">
+	    						<input style="width: 250px;" type="hidden" class="size" name="size">
+	    					</span>
+	    				</span>
+	    				<span id="addimg-wrap">
+	    					<span class="addimg" style="display:inline-block; width: 300px;">
+	    	    				<span class="form-tit" style="display:inline-block; width: 100px;">추가 이미지</span>						
+	    						<label class="img" for="addimg">+</label>
+	    						<input id="addimg" class="bimg" type="file" name="bimg" onchange="bimgChanged(this)">
+	    						<input type="hidden" class="newName" name="newName">
+	    						<input type="hidden" class="orgName" name="orgName">
+	    						<input type="hidden" class="size" name="size">
+	    					</span>
+	    					<!-- 여기에 동적 삽입 -->
+	    				</span>
+	    			</div>
+	    			<div>
+	    				<span class="form-tit">내용</span>
+	    			</div>
+	    			<div>
+	    				<span><textarea id="summernote" name="content"></textarea></span>
+	    			</div>
+	    			<div>
+	    				<span>
+							<input class="reg-btn" type="submit" value="공지사항 등록" onclick='btn_click("notice");'>
+							<input class="reg-btn" type="submit" value="자유게시물 등록" onclick='btn_click("normal");'>
+	    				</span>
+	    			</div>
+	    		</div>
+    		</form>
+    	</div>
+    </main>
+</body>
+</html>

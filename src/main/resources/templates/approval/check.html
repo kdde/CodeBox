@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org" >
+<head>
+ 	<th:block th:insert="~{admin/AdminLayout :: head}"/>
+	<link rel="stylesheet" href="/css/approval/approval.css">
+	<link rel="stylesheet" href="/css/approval/list.css">	
+</head>
+<body class="flex">
+	<th:block th:insert="~{admin/AdminLayout :: header}"/>
+    <main>
+    	<h1>메인컨텐츠</h1>
+    	<div class="wrap">
+   			<table >
+   				<thead>
+   				<tr>
+   					<td>결재번호</td>
+   					<td>결재제목</td>
+   					<td>결재 등록일</td>
+   					<td>결재상태</td>
+   				</tr>
+   				</thead>
+   				<tr th:each="dto:${list}">
+   					<td>[[${dto.ano}]]</td>
+   					<td>[[${dto.title}]]</td>
+   					<td>[[${dto.date}]]</td>
+   					<td>
+   						[[${dto.status}]]
+   					</td>
+   					
+   				</tr>	
+   			 			<tr th:if="${page.getNumberOfElements()==0}">
+	    				<td colspan="5">존재하지 않는페이지</td>
+	    			</tr>
+   			</table>
+   			<div th:if="${page.getNumberOfElements()>0}">
+    			<a th:if="${page.hasPrevious()}" th:href="|/approval/check/${#authentication.principal.mno}?page=${page.getNumber()}|">&lt;</a>
+    			<span th:text="${page.getNumber()+1}">현재페이지</span>
+    			/
+    			<span th:text="${page.getTotalPages()}">총페이지수</span> 
+    			<a th:if="${page.hasNext()}" th:href="|/approval/check/${#authentication.principal.mno}?page=${page.getNumber()+2}|">&gt;</a>
+    		</div>
+       	</div>
+    </main>
+</body>
+</html>

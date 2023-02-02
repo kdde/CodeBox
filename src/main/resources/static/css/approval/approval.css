@@ -1,0 +1,12 @@
+@charset "UTF-8";
+
+.title{
+	width: 250px;
+	height: 25px;
+	margin-bottom: 20px;
+}
+
+.content{
+	width:780px;
+	height: 254px;
+}

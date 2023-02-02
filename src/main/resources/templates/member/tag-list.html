@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<div class="cate-ol" th:unless="${#lists.isEmpty(list)}">
+		<div class="cover flex">
+		<th:block th:each="dto:${list}">
+		<li th:value="${dto.dno}"  th:class="|tree sub cate ${'cate-'+dto.depth}|">
+			<ol>
+				<li th:unless="${dto.dname==''}" class="tree-2" >
+					<span onclick="onclickDepartment(this)" th:text="${dto.dname}">카테고리명</span>
+					<input th:type="hidden" th:class="${dto.depth}" th:value="${dto.dno}">
+				</li>
+			</ol>
+			<ol class="entry cate-wrap">
+				
+			</ol>
+		</li>
+		</th:block>
+		</div>
+	</div>
+</html>

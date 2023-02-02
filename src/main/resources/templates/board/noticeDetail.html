@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+xmlns:sec="http://www.thymeleaf.org/exdivas/spring-security">
+<head>
+    <th:block th:insert="~{admin/AdminLayout :: head}"/>
+	<link rel="stylesheet" href="/css/commons/common.css">
+	<link rel="stylesheet" href="/css/board/detail.css">
+    <style type="text/css">
+    	#edit-mode{display: none;}
+    </style>
+<script type="text/javascript">
+    $(function(){
+    	$("#btn-edit").click(editMode);
+    	$("#btn-cancel").click(function(){
+    		$("#edit-mode").hide();
+        	$("#def-mode").show();
+    	});
+    });
+   
+    
+    function editMode(){
+    	$("#edit-mode").show();
+    	$("#def-mode").hide();
+    }
+    
+    var idx=1;
+    function bimgChanged(el) {
+    	
+    	var fileData=$(el)[0].files[0];
+    	
+    	console.log(fileData);
+    	
+    	var formData = new FormData()
+		formData.append('bimg', fileData);
+    	
+    	$.ajax({
+    		url: "/admin-notice/temp-upload",
+    		type: "post",
+    		contentType: false,
+    		processData: false,
+    		data:formData,
+    		success:function(map){ /* 서버에 업로드이후 url을 리턴 -> 파라미터에 전달 */
+    			console.log(map);
+    			
+    			$(el).siblings(".img").css("background-image", "url("+map.url+")");
+    			$(el).siblings(".newName").val(map.newName);
+    			$(el).siblings(".orgName").val(map.orgName);
+    			$(el).siblings(".size").val(map.size);
+    			//대표 이미지와 추가 이미지 구분
+    			if($(el).prop("id") == "defimg")return;//대표이미지인 경우 여기서 함수종료
+    			
+    		}	
+    	});
+    }
+    
+    
+</script>
+</head>
+<body class="flex">
+	<th:block th:insert="~{admin/AdminLayout :: header}"/>
+    <main>
+    	<h1>메인영역</h1>
+    	<div class="wrap b-view-size">
+    		<div class="flex">
+	    		<!-- ROLE_USER 인경우만 -->
+	    		<div class="button_box" sec:authorize="hasRole('ROLE_USER')">
+	    			<!-- 현재유저의 username = 작성자ID일치한 경우 수정버튼 활성화 -->
+	    			<!-- 현재 #authentication.name , #authentication.principal. 일치하는데이터 -->
+	    			<span th:if="${#authentication.name == detail.writerId}">
+	    				<button class="edit_button" type="button" id="btn-edit">게시물 수정</button>
+	    			</span>
+	    		</div>
+	    		<div sec:authorize="hasRole('ROLE_USER')">
+	    			<th:block th:if="${#authentication.name == detail.writerId or #authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+		    			<form th:action="|/notice-boards/${detail.bno}|" method="post">
+		    				<input type="hidden" name="flag" value="1">
+							<input type="hidden" name="_method" value="DELETE">
+							<input type="hidden" name="rno" value="0">
+							<button>게시물 삭제</button>
+						</form>
+					</th:block>
+	    		</div>
+    		</div>
+    		<form id="edit-mode" th:action="|/notice-boards/${detail.bno}|" method="post">
+	    		<div class="section no">
+    				<span class="title">No.</span>
+    				<span th:text="${detail.bno}"></span>
+    			</div>
+    			<div class="flex">
+    				<div class="section">
+		    			<span class="title">작성일</span>
+		    				<span>
+	    					<span
+	    					th:text="${detail.createdDate.toLocalDate()}">날짜</span>
+	    					<span 
+	    					th:text="${#temporals.format(detail.createdDate, 'HH시 mm분 ss초')}">시간</span>
+	    					</span>
+		    		</div>
+		    		<div class="section update_date">
+		    				<span class="title">최종수정일</span>
+		    				<span>
+	    					<span
+	    					th:text="${detail.updatedDate.toLocalDate()}">날짜</span>
+	    					<span
+	    					th:text="${#temporals.format(detail.updatedDate, 'HH시 mm분 ss초')}">시간</span>
+	    					</span>
+	    			</div>
+	    		</div>
+	    		<div class="section">
+	    				<span class="title">작성자</span>
+	    				<span  th:text="${detail.writerName}"></span>
+	    		</div>
+	    		<div class="section">
+	    				<span class="title">조회수</span>
+	    				<span  th:text="${detail.readCount}"></span>
+	    		</div>
+    			<div class="section">
+    				<span class="title">제목</span>
+    				<span th:text="${detail.title}"></span>
+    				<input type="hidden" name="title" th:value="${detail.title}" />
+    			</div>
+    			<div class="dep1">
+    				<span id="addimg-wrap" style="display:flex;">
+	    				<th:block th:each="idto:${detail.imgs}">
+	    					<span class="addimg" style="display: inline-block; margin: 15px 10px 15px 35px;">
+	    						<label class="img" for="addimg"  th:style="|background-image: url('${idto.imgUrl}');|">+</label>
+	    						<input id="addimg" class="bimg" type="file" name="bimg" onchange="bimgChanged(this)">
+	    						<input type="hidden" class="newName" name="newName" th:value="${idto.imgUrl}">
+	    						<input type="hidden" class="orgName" name="orgName" th:value="${idto.orgImgUrl}">
+	    						<input type="hidden" class="size" name="size">	
+	    					</span>
+	    				</th:block>
+				   </span>
+				</div>
+	    		<div class="section">
+	    			<span class="title">내용</span>
+	    			<span>
+	    				<textarea rows="8" cols="70" name="content">[[${detail.content}]]</textarea>
+	    			</span>
+	    		</div>
+	    		<div>
+	    			<span>
+	    				<input type="hidden" name="_method" value="patch">
+	    				<button type="submit">수정완료</button>
+	    				<button type="button" id="btn-cancel">취소</button>
+	    			</span>
+	    		</div>
+    		</form>
+    		<!-- //////////////////////////////////////// -->
+    		<div id="def-mode">
+    			<div class="section no">
+    				<span class="title">No.</span>
+    				<span th:text="${detail.bno}"></span>
+    			</div>
+    			<div class="flex">
+    				<div class="section">
+		    			<span class="title">작성일</span>
+		    				<span>
+	    					<span
+	    					th:text="${detail.createdDate.toLocalDate()}">날짜</span>
+	    					<span 
+	    					th:text="${#temporals.format(detail.createdDate, 'HH시 mm분 ss초')}">시간</span>
+	    					</span>
+		    		</div>
+		    		<div class="section update_date">
+		    				<span class="title">최종수정일</span>
+		    				<span>
+	    					<span
+	    					th:text="${detail.updatedDate.toLocalDate()}">날짜</span>
+	    					<span
+	    					th:text="${#temporals.format(detail.updatedDate, 'HH시 mm분 ss초')}">시간</span>
+	    					</span>
+	    			</div>
+	    		</div>
+	    		<div class="section">
+	    				<span class="title">작성자</span>
+	    				<span  th:text="${detail.writerName}"></span>
+	    		</div>
+	    		<div class="section">
+	    				<span class="title">조회수</span>
+	    				<span  th:text="${detail.readCount}"></span>
+	    		</div>
+    			<div class="section">
+    				<span class="title">제목</span>
+    				<span  th:text="${detail.title}"></span>
+    			</div>
+    			<div class="img-area">
+					<ul class="addImg-wrap flex">
+						<th:block th:each="idto:${detail.imgs}">
+							<li class="addImg" th:style="|background-image: url('${idto.imgUrl}');|"></li>
+						</th:block>
+					</ul>
+				</div>
+    			<div class="content section">
+    				<span class="title">내용</span>
+    				<span th:utext="${detail.content}"></span>
+    			</div>
+    			<div class="reply">
+	    			<form class="reply-form" method="post" th:action="|/notice-boards/${detail.bno}|">
+			    		<div>
+			    			<div class="re-title">
+			    				<span>댓글 작성</span>
+			    			</div>
+			    			<div class="flex">
+			    				<span><input type="text" name="content" placeholder="댓글 내용을 입력하세요" style="width: 280px; height: 30px; margin-right: 10px;"></span>
+			    				<span>
+									<input class="reply_button" type="submit" value="등록">
+			    				</span>
+			    			</div>
+			    		</div>
+		    		</form>
+		    		<div>
+			    		<th:block th:each="rdto : ${list}" th:if="${detail.bno == rdto.bno}">
+			    			<div class="flex">
+				    			<div class="reply-list section">
+				    				<span th:text="${rdto.createdDate.toLocalDate()}" style="display:inline-block; margin-right:7px; color: gray; ">작성일자</span>
+				    				<span th:text="${rdto.writerName}" style="color: #037e51; margin-right:10px;">작성자</span>
+				    				<span th:utext="${rdto.content}" style="display: inline-block; width: 300px;">댓글 내용</span>
+				    			</div>
+					    		<th:block th:if="${#authentication.name == rdto.writerId or #authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+			        				<form th:action="|/notice-boards/${detail.bno}|" method="post">
+										<input type="hidden" name="_method" value="DELETE">
+										<input type="hidden" name="flag" value="0">
+										<input type="hidden" name="rno" th:value="${rdto.rno}">
+										<button class="reply_button">댓글 삭제</button>
+									</form>
+								</th:block>
+							</div>
+			    		</th:block>
+					</div>
+    			</div>
+    		</div>
+    	</div>
+    </main>
+</body>
+</html>

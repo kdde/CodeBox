@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body class="flex">
+
+
+<!-- ajax를 활용해서 검색 할 때 넘어오는 페이지!!!!!!!!!-->
+	<table class="board-title">
+		<tr th:each="dto : ${searchResult}">
+			<td th:text="${dto.bno}">No</td>
+			<td><a th:href="|/boards/${dto.bno}|">[[${dto.title}]]</a></td>
+			<td th:text="${dto.readCount}">조회수</td>
+			 <td>[[${dto.writerId}]]</td>
+			<td>
+				<span
+				th:text="${dto.updatedDate.toLocalDate()}">날짜</span>
+			</td>
+		</tr>
+	</table>
+
+</body>
+</html>

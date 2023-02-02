@@ -1,0 +1,91 @@
+@charset "UTF-8";
+
+
+.commuteList_wrap{
+	padding-left: 5%;
+	padding-top: 12%;	
+}
+.commuteListTable{
+	border: 1px solid rgb(0, 149, 112);
+}
+.commutehead>tr td{
+	padding: 0 10px;
+	text-align: center;
+	font-weight: bold;
+	font-size:20px;
+	border: 1px solid rgb(0, 149, 112);
+	color: #00000F;
+}
+.commutehead{
+	border: 1px solid rgb(0, 149, 112);
+}
+.commuteList>tr td{
+	padding: 0 10px;
+	border: 1px solid rgb(0, 149, 112);
+	color: #00000F;
+}
+.commuteList{
+	border: 1px solid rgb(0, 149, 112);
+}
+
+.commuteBox{
+	margin-top: 20px;
+	margin-left: 20px;
+	width: 400px;
+	height: 100px;
+	border: 1px solid #00af85;
+	border-radius: 20px;
+	position: absolute;
+	top: 15%;
+	left: 16%;
+}
+
+.Box{
+	margin :auto auto;
+}
+
+.Box>.goSpan{
+	margin: 20px;
+	text-align: center;
+}
+
+.Box>.offSpan{
+	margin-top: 20px;
+	text-align: center;
+}
+
+.Box>.go{
+	margin : 10px auto; 
+	text-align: center;
+	width: 50px;
+	color: white;
+	background-color: #00af85;
+	border-radius: 20px;
+	border-color: #00af85;
+}
+
+.Box>.off{
+	margin : 10px auto; 
+	text-align: center;
+	width: 50px;
+	color: white;
+	background-color: #00af85;
+	border-radius: 20px;
+	border-color: #00af85;
+}
+.gameInfo{
+	position : absolute;
+	top: 10%;
+	left: 58%;
+	border: 3px solid rgb(0, 149, 112);
+	border-radius : 30px;
+	width: 640px;
+	height: 450px;
+	text-align: center;
+}
+.gameInfo p{
+	font-size: 20px;
+	padding: 0;
+	font-weight: bold;
+	color: #00000F;
+}
