@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script>
+    /*/
+    $(function(){
+    	$("form").submit(function(){ //모든 from태그 무효화,  a href 무효화
+    		event.preventDefault();
+    	});
+    });
+    */
+    function searchBusInfo(event){
+    	event.preventDefault(); //form action 실행 안함.
+    	var strSrch = $("#strSrch").val().trim();
+  
+    	$.ajax({
+    		url:"/bus/search",
+    		//{name:value} --> name은 변수가 아님
+    		data:{strSrch:strSrch},
+    		success:function(result){
+    			
+    		}
+    	});
+    }
+    </script>
+</head>
+<body>
+    <p>버스api</p>
+    <form onsubmit="searchBusInfo(event)">
+    	<label>버스번호 입력</label>
+    	<input type="text" id="strSrch">
+    	<button>검색</button>
+    </form>
+</body>
+</html>

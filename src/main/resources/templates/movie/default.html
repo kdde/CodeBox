@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script>
+	$(function(){
+		dailyBoxOfficeList();
+	});
+	
+	function dailyBoxOfficeList(){
+		$.ajax({
+			url:"/movies/dailyBoxOfficeList",
+			success:function(dailyBoxOfficeList){
+				$("#display-list").html(dailyBoxOfficeList);
+			}
+		});
+	}
+</script>
+</head>
+<body>
+	<p>영화정보를 표현할 페이지</p>
+	<div id="display-list">
+		
+	</div>
+</body>
+</html>
