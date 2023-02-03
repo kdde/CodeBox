@@ -24,26 +24,21 @@ input[type=file] {
 	display: none;
 }
 
-button{
-	background-color: #037e51;
-    color: #fff;
+.btn{
+	background-color: #5587a2;
+    color: #f6d256;
+	border-radius: 15px;
+	border-color: #f6d256;
+	border-width: 2px;
+	border-style: outset;
     font-size: 14px;
     font-weight: 600;
     text-align: center;
     display: inline-block;
     width: 120px;
     height: 35px;
-    border-radius: 5px;
 	margin-top: 7px;
-	border: 0;
-	outline: 0;
 	
-}
-
-.edit_button {
-	background-color: transparent;
-    border: 1px solid #037e51;
-    color: #037e51;
 }
 
 .button_box {
@@ -75,6 +70,7 @@ button{
 	font-size: 16px;
 	font-weight: bold;
 	margin-right: 5px;
+	color: #f6d256;
 }
 
 .img-area{
@@ -82,10 +78,11 @@ button{
 }
 .section{
 	margin-top: 10px;
-	border-bottom: #c9c9c9;
+	border-bottom: #ffeba8;
 	border-bottom-style: solid;
 	border-bottom-width: thin;
 	line-height: 26px;
+	color: #ffeba8;
 }
 .no{
 	margin-top: 45px;
@@ -98,16 +95,19 @@ button{
 	font-size: 16px;
 	font-weight: bold;
 	margin: 10px 0;
+	color: #f6d256;
 }
 .reply_button{
-	background-color: #03bb85;
-	color: #fff;
+	background-color: #5587a2;
+    color: #f6d256;
+	border-radius: 15px;
+	border-color: #f6d256;
+	border-width: 2px;
+	border-style: outset;
 	width: 80px;
     height: 25px;
     font-size: 12px;
     font-weight: 600;
-    border-radius: 5px;
-    border: 1px solid #03a977;
     margin-left: 10px;
 }
 .reply-list{

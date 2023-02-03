@@ -7,15 +7,15 @@ main{
 }
 
 header>.wrap{
-	background-color: #03bb85;
-	color: #fff;
+	background-color: #5587a2;
+	color: #f6d256;
 	padding: 0px 20px 10px;
-	height: 105vh;
+	height: 100vh;
 	min-width:200px;
 	box-shadow: 6px 0 3px rgb(0, 23, 13, 20%);
 }
 header>.wrap a{
-	color: #fff;
+	color: rgb(255, 235, 168, 80%);
 	text-decoration: none;
 	font-weight: bold;
 }
@@ -30,8 +30,8 @@ header>.wrap ul>li{
 
 header>.wrap ul>li dl>dt{
 	font-weight: 700;
-	color:  rgba(255, 255, 255, 60%);
-	border-bottom: 0.5px solid rgba(255, 255, 255, 100%);
+	color: #f6d256;
+	border-bottom: 0.5px solid rgb(246, 210, 86, 50%);
 	padding: 0.5em 0;
 }
 header>.wrap ul>li dl>dd{
