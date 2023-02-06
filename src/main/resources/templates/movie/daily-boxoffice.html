@@ -1,28 +1,40 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
+<link rel="stylesheet" href="/css/commons/common.css">
+<link rel="stylesheet" href="/css/commons/movie.css">
 <table>
 	<thead>
 		<tr>
-			<td>이미지</td>
+			<td> </td>
 			<th colspan="2">영화명</th>
-			<th>매출액</th>
-			<th>관객수</th>
-			<th>증감율</th>
-			<th>기타</th>
+			<th>누적 매출액</th>
+			<th>누적 관객수</th>
+			<th>랭킹 진입여부</th>
 			<th>개봉일</th>
+			<th>영화코드</th>
+			<th>현재 상영스크린 수</th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr th:each="dto:${list}">
-			<td><img th:src="${dto.imgUrl}" width="100px" /></td>
+			<td><img th:src="${dto.imgUrl}" style="width: 100px;"/></td>
 			<td th:text="${dto.rank}">랭크</td>
-			<td th:text="${dto.movieNm}">영화명</td>
-			<td th:text="${dto.salesAmt}">매출액</td>
-			<td th:text="${dto.audiAcc}">관객수</td>
-			<td th:text="${dto.rankInten}">증감율</td>
-			<td th:text="${dto.movieCd}">코드</td>
+			<td th:text="${dto.movieNm}">순위</td>
+			<td th:text="|${#numbers.formatInteger(dto.salesAcc, 0, 'COMMA')} 원|">매출액</td>
+			<td th:text="|${#numbers.formatInteger(dto.audiAcc, 0, 'COMMA')} 명|">관객수</td>
+			<td th:text="${dto.rankOldAndNew}">랭킹진입여부</td>
 			<td th:text="${dto.openDt}">개봉일</td>
+			<td th:text="${dto.movieCd}">코드</td>
+			<td th:text="|${dto.scrnCnt} 관|">상영스크린 수</td>
 		</tr>
 	</tbody>
 </table>
+	<div class="direct">
+		바로가기
+			<div>
+				<a href="https://www.cgv.co.kr/">CGV</a>
+				<a href=" https://www.lottecinema.co.kr/NLCHS">롯데시네마</a>
+				<a href="https://www.megabox.co.kr/">메가박스</a>
+			</div>
+	</div>
 </html>
