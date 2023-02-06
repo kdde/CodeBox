@@ -1,0 +1,29 @@
+{	"lastBuildDate":"Thu, 02 Feb 2023 10:27:33 +0900",
+	"total":1,	
+	"start":1,	
+	"display":1,	
+	"items":[		
+		{			
+			"title":"<b>더 퍼스트 슬램덩크<\/b>",
+			"link":"https:\/\/movie.naver.com\/movie\/bi\/mi\/basic.nhn?code=223800",
+			"image":"https:\/\/ssl.pstatic.net\/imgmovie\/mdi\/mit110\/2238\/223800_P09_101811.jpg",
+			"subtitle":"The First Slam Dunk",
+			"pubDate":"2022",
+			"director":"이노우에 다케히코|",
+			"actor":"",
+			"userRating":"9.50"		
+		}	
+	]
+}
+
+//////////////////////////
+{"comMsgHeader":{
+			"responseTime":null,
+			"requestMsgID":null,
+			"responseMsgID":null,
+			"returnCode":null,
+			"errMsg":null,
+			"successYN":null},
+"msgHeader":{
+			"headerMsg":"Key인증실패: SERVICE KEY IS NOT REGISTERED ERROR.[인증모듈 에러코드(30)]",
+			"headerCd":"7","itemCount":0},"msgBody":{"itemList":null}}
