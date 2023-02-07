@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TOMCAT_ROOT="/usr/local/apache-tomcat-9.0.70"
+TOMCAT_ROOT="/usr/local/apache-tomcat-9.0.71"
 APP_BASE="/home/ec2-user/src/webapp"
 DEPLOY_PATH="/home/ec2-user/src/deploy"
 DEPLOY_LOG="$TOMCAT_ROOT/deploy.log"
