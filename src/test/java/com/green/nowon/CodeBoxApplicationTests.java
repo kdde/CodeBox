@@ -10,7 +10,7 @@ import com.green.nowon.domain.entity.member.MemberEntityRepository;
 import com.green.nowon.security.MyRole;
 
 @SpringBootTest
-class GreengamesApplicationTests {
+class CodeBoxApplicationTests {
 
 	@Autowired
 	MemberEntityRepository repo;

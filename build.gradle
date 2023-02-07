@@ -11,7 +11,7 @@ sourceCompatibility = '11'
 
 war {
   enabled = true
-  archiveName("greengames.war")
+  archiveName("CodeBox.war")
 }
 bootWar { 
   enabled = false 
