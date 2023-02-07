@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<table>
+	<thead>
+		<tr>
+			<th>노선ID</th>
+			<th>노선명</th>
+			<th>노선유형</th>
+			<th>기점</th>
+			<th>종점</th>
+			<th>금일첫차시간</th>
+			<th>금일막차시간</th>
+			<th>배차간격</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr th:each="dto : ${list}">
+			<td th:text="${dto.busRouteId}">노선ID</td>
+			<td th:text="${dto.busRouteNm}">노선명</td>
+			<td th:text="${dto.RouteType}">노선유형</td>
+			<td th:text="${dto.stStationNm}">기점</td>
+			<td th:text="${dto.edStationNm}">종점</td>
+			<td th:text="${dto.firstBusTm}">금일첫차시간</td>
+			<td th:text="${dto.lastBusTm}">금일막차시간</td>
+			<td th:text="${dto.term}">배차간격</td>
+		</tr>
+	</tbody>
+</table>
+</html>
