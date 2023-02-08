@@ -1,8 +1,11 @@
 @charset "UTF-8";
 
+h2{
+	color: #f6d256;
+}
 
 .salary-list{
-	border: 3px solid black;
+	border: 3px solid #f6d256;
 	width: 200px;
 	height: auto;
 	text-align: center;
@@ -22,6 +25,7 @@
 	margin-bottom: 5px;
 	margin-top: 3px;
 	font-size: 13px;
+	color: #ffeba8;
 }
 .emp-list{
 	width: 1050px;

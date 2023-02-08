@@ -1,91 +1,124 @@
 @charset "UTF-8";
 
+.commuteListTable {
+	padding: 10px;
+	border: 1px solid #f6d256;
+	border-radius: 20px;
+	margin-top: 10px;
+	margin-left: 10px;
+	width: 700px;
+}
 
-.commuteList_wrap{
-	padding-left: 5%;
-	padding-top: 12%;	
-}
-.commuteListTable{
-	border: 1px solid rgb(0, 149, 112);
-}
-.commutehead>tr td{
+.commutehead>tr td {
 	padding: 0 10px;
 	text-align: center;
 	font-weight: bold;
-	font-size:20px;
-	border: 1px solid rgb(0, 149, 112);
-	color: #00000F;
+	font-size: 20px;
+	color: #f6d256;
 }
-.commutehead{
-	border: 1px solid rgb(0, 149, 112);
+
+.commutehead {
+	border: 1px solid #5587a2;
 }
-.commuteList>tr td{
+
+.commuteList>tr td {
 	padding: 0 10px;
-	border: 1px solid rgb(0, 149, 112);
-	color: #00000F;
-}
-.commuteList{
-	border: 1px solid rgb(0, 149, 112);
+	color: #ffeba8;
 }
 
-.commuteBox{
-	margin-top: 20px;
-	margin-left: 20px;
-	width: 400px;
+.commuteList {
+	border: 1px solid #f6d256;
+}
+
+.commuteBox {
+	width: 700px;
 	height: 100px;
-	border: 1px solid #00af85;
-	border-radius: 20px;
-	position: absolute;
-	top: 15%;
-	left: 16%;
+	border: 1px solid #f6d256;
+	border-radius: 15px;
+	margin-top: 10px;
+	margin-left: 10px;
 }
 
-.Box{
-	margin :auto auto;
-}
-
-.Box>.goSpan{
-	margin: 20px;
+.Box {
+	margin: auto auto;
 	text-align: center;
 }
 
-.Box>.offSpan{
+.Box>.goSpan {
+	text-align: center;
+	color: #ffeba8;
+}
+
+.Box>.offSpan {
 	margin-top: 20px;
 	text-align: center;
+	color: #ffeba8;
 }
 
-.Box>.go{
-	margin : 10px auto; 
+.Box>.go {
+	margin: 10px auto;
 	text-align: center;
 	width: 50px;
-	color: white;
-	background-color: #00af85;
-	border-radius: 20px;
-	border-color: #00af85;
+	font-weight: bold;
+	font-size: 14px;
+	background-color: #5587a2;
+    color: #f6d256;
+	border-radius: 15px;
+	border-color: #f6d256;
+	padding: 7px;
+	cursor: pointer;
 }
 
-.Box>.off{
-	margin : 10px auto; 
+.Box>.off {
+	margin: 10px auto;
 	text-align: center;
 	width: 50px;
-	color: white;
-	background-color: #00af85;
-	border-radius: 20px;
-	border-color: #00af85;
+	font-weight: bold;
+	font-size: 14px;
+	background-color: #5587a2;
+    color: #f6d256;
+	border-radius: 15px;
+	border-color: #f6d256;
+	padding: 7px;
+	cursor: pointer;
 }
-.gameInfo{
-	position : absolute;
-	top: 10%;
-	left: 58%;
-	border: 3px solid rgb(0, 149, 112);
-	border-radius : 30px;
-	width: 640px;
-	height: 450px;
+
+.gameInfo {
+	border: 1px solid #f6d256;
+	border-radius: 15px;
+	height: 425px;
 	text-align: center;
+	margin-top: 10px;
+	margin-left: 10px;
+	padding: 10px;
 }
-.gameInfo p{
+
+.gameInfo p {
 	font-size: 20px;
 	padding: 0;
 	font-weight: bold;
-	color: #00000F;
+	color: #ffeba8;
+}
+
+.auth_wrap {
+	margin-left: 10px;
+}
+
+.auth_wrap button {
+	margin: 10px auto;
+	text-align: center;
+	width: 75px;
+	font-weight: bold;
+	font-size: 14px;
+	background-color: #5587a2;
+    color: #f6d256;
+	border-radius: 15px;
+	border-color: #f6d256;
+	padding: 7px;
+	cursor: pointer;
+}
+
+.pageNumber a{
+	margin-left: 30px;
+	color: #f6d256;
 }

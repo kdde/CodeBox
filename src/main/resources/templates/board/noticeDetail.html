@@ -58,16 +58,16 @@ xmlns:sec="http://www.thymeleaf.org/exdivas/spring-security">
 </head>
 <body class="flex">
 	<th:block th:insert="~{admin/AdminLayout :: header}"/>
-    <main>
+    <main style="background-color: #2d4554">
     	<h1>메인영역</h1>
     	<div class="wrap b-view-size">
-    		<div class="flex">
+    		<div class="flex" id="b_box">
 	    		<!-- ROLE_USER 인경우만 -->
 	    		<div class="button_box" sec:authorize="hasRole('ROLE_USER')">
 	    			<!-- 현재유저의 username = 작성자ID일치한 경우 수정버튼 활성화 -->
 	    			<!-- 현재 #authentication.name , #authentication.principal. 일치하는데이터 -->
 	    			<span th:if="${#authentication.name == detail.writerId}">
-	    				<button class="edit_button" type="button" id="btn-edit">게시물 수정</button>
+	    				<button class="edit_button btn" type="button" id="btn-edit">게시물 수정</button>
 	    			</span>
 	    		</div>
 	    		<div sec:authorize="hasRole('ROLE_USER')">
@@ -76,7 +76,7 @@ xmlns:sec="http://www.thymeleaf.org/exdivas/spring-security">
 		    				<input type="hidden" name="flag" value="1">
 							<input type="hidden" name="_method" value="DELETE">
 							<input type="hidden" name="rno" value="0">
-							<button>게시물 삭제</button>
+							<button class="btn">게시물 삭제</button>
 						</form>
 					</th:block>
 	    		</div>
@@ -141,8 +141,8 @@ xmlns:sec="http://www.thymeleaf.org/exdivas/spring-security">
 	    		<div>
 	    			<span>
 	    				<input type="hidden" name="_method" value="patch">
-	    				<button type="submit">수정완료</button>
-	    				<button type="button" id="btn-cancel">취소</button>
+	    				<button type="submit" class="btn">수정완료</button>
+	    				<button type="button" id="btn-cancel" class="btn">취소</button>
 	    			</span>
 	    		</div>
     		</form>
@@ -214,7 +214,7 @@ xmlns:sec="http://www.thymeleaf.org/exdivas/spring-security">
 			    			<div class="flex">
 				    			<div class="reply-list section">
 				    				<span th:text="${rdto.createdDate.toLocalDate()}" style="display:inline-block; margin-right:7px; color: gray; ">작성일자</span>
-				    				<span th:text="${rdto.writerName}" style="color: #037e51; margin-right:10px;">작성자</span>
+				    				<span th:text="${rdto.writerName}" style="color: #f6d256; margin-right:10px;">작성자</span>
 				    				<span th:utext="${rdto.content}" style="display: inline-block; width: 300px;">댓글 내용</span>
 				    			</div>
 					    		<th:block th:if="${#authentication.name == rdto.writerId or #authorization.expression('hasRole(''ROLE_ADMIN'')')}">

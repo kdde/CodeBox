@@ -2,7 +2,6 @@
 <html  xmlns:th="http://www.thymeleaf.org" >
 <head>
  	<th:block th:insert="~{admin/AdminLayout :: head}"/>
-	<link rel="stylesheet" href="/css/default.css">
 	<link rel="stylesheet" href="/css/admin/ggAdmin.css">
 	<th:block th:insert="~{admin/AdminLayout :: header}"/>
 
@@ -55,79 +54,81 @@
 
 </head>
 <body class="flex">
-    <main>
-    	<div class="wrap">
-    		<input class="mno" type="hidden" th:value="${#authentication.principal.mno}">
-    		<br><br>
-       		<div class="flex commuteBox"><!-- 네모네모 상자 -->
-    			<div class="Box"><!-- 출근 상자 -->
-    				<span class="goSpan" th:text="${gtime}"></span><br>
-    				<button class="go" onclick="already(this)" th:if="${gtime==otime}">출근</button>
-    				<button class="go" onclick="btnOnclick(this)" th:if="${gtime!=otime}">출근</button>
-    			</div>
-    			<div class="Box"><!-- 퇴근 상자 -->
-    				<span class="offSpan" th:text="퇴근시간" th:if="${gtime==otime}"></span>
-    				<span class="offSpan" th:text="${otime}" th:if="${gtime!=otime}"></span><br>
-    				<button class="off" onclick="btnOnclick(this)">퇴근</button>
-    			</div>
-    		</div>
-    	</div>
-    	<div class="commuteList_wrap">	    	
-    	<table class="commuteListTable">
-				<thead class="commutehead">
-					<tr>
-						<td>이름</td>
-						<td>날짜</td>
-						<td>출근시간</td>
-						<td>퇴근시간</td>
-						<td>근무형태</td>
-					</tr>				
-				</thead>
-				<tbody class="commuteList">
-					<tr th:each="lists : ${list}" th:if="${!#lists.isEmpty(list)}">
-						<td th:text="${lists.member.name}">이름</td>
-						<td th:text="${lists.today}">날짜</td>
-						<td th:text="${lists.gTime}">출근시간</td>
-					
-						<td th:if="${lists.oTime==lists.gTime}">퇴근시간</td>
-						<td th:text="${lists.oTime}"
-							th:if="${lists.oTime!=lists.gTime}">퇴근시간</td>
-					
-						<td th:text="${lists.cType}">근무형태</td>
-					</tr>
-					<tr th:if="${#lists.isEmpty(list)}">
-						<td>값이 없습니다.</td>
-					</tr>
-					
-				</tbody>
-			</table>
-			<div class="pageNumber" th:if="${p.getNumberOfElements()>0}">
-				<a th:if="${p.hasPrevious()}"
-					th:href="|/admin?page=${p.getNumber()}|">&lt;</a>
-
-				<th:block th:each="p:${#numbers.sequence(startPage, endPage)}">
-					<a th:if="${p != nowPage}" th:href="@{admin?(page=${p})}"
-						th:text="${p}"></a>
-					<a th:if="${p == nowPage}" th:text="${p}" class="active"></a>
-				</th:block>
-				<!-- th:href="@{notice-boards?(page=${p})}" -->
-				<a th:if="${p.hasNext()}" th:href="|/admin?page=${p.getNumber()+2}|">&gt;</a>
+    <main style="background-color: #2d4554">
+   		<div class="flex">
+	    	<div>
+		    	<div>
+		    		<input class="mno" type="hidden" th:value="${#authentication.principal.mno}">
+		       		<div class="flex commuteBox"><!-- 네모네모 상자 -->
+		    			<div class="Box"><!-- 출근 상자 -->
+		    				<span class="goSpan" th:text="${gtime}"></span><br>
+		    				<button class="go" onclick="already(this)" th:if="${gtime==otime}">출근</button>
+		    				<button class="go" onclick="btnOnclick(this)" th:if="${gtime!=otime}">출근</button>
+		    			</div>
+		    			<div class="Box"><!-- 퇴근 상자 -->
+		    				<span class="offSpan" th:text="퇴근시간" th:if="${gtime==otime}"></span>
+		    				<span class="offSpan" th:text="${otime}" th:if="${gtime!=otime}"></span><br>
+		    				<button class="off" onclick="btnOnclick(this)">퇴근</button>
+		    			</div>
+		    		</div>
+		    	</div>
+		    	<div class="commuteList_wrap">	    	
+			    	<table class="commuteListTable">
+						<thead class="commutehead">
+							<tr>
+								<td>이름</td>
+								<td>날짜</td>
+								<td>출근시간</td>
+								<td>퇴근시간</td>
+								<td>근무형태</td>
+							</tr>				
+						</thead>
+						<tbody class="commuteList">
+							<tr th:each="lists : ${list}" th:if="${!#lists.isEmpty(list)}">
+								<td th:text="${lists.member.name}">이름</td>
+								<td th:text="${lists.today}">날짜</td>
+								<td th:text="${lists.gTime}">출근시간</td>
+							
+								<td th:if="${lists.oTime==lists.gTime}">퇴근시간</td>
+								<td th:text="${lists.oTime}"
+									th:if="${lists.oTime!=lists.gTime}">퇴근시간</td>
+							
+								<td th:text="${lists.cType}">근무형태</td>
+							</tr>
+							<tr th:if="${#lists.isEmpty(list)}">
+								<td>값이 없습니다.</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="pageNumber" th:if="${p.getNumberOfElements()>0}">
+						<a th:if="${p.hasPrevious()}"
+							th:href="|/admin?page=${p.getNumber()}|">&lt;</a>
+		
+						<th:block th:each="p:${#numbers.sequence(startPage, endPage)}">
+							<a th:if="${p != nowPage}" th:href="@{admin?(page=${p})}"
+								th:text="${p}"></a>
+							<a th:if="${p == nowPage}" th:text="${p}" class="active"></a>
+						</th:block>
+						<!-- th:href="@{notice-boards?(page=${p})}" -->
+						<a th:if="${p.hasNext()}" th:href="|/admin?page=${p.getNumber()+2}|">&gt;</a>
+					</div>
+				</div>
+			</div>
+			<div class="wrap gameInfo">
+				<p class="date">
+					<script>
+						let today = new Date();
+						let y = today.getFullYear();
+						let m = today.getMonth()+1;
+						let d = today.getDate();
+						document.write( y +'년 '+ m +'월 ' + d +'일 '+' : 오늘의 게임정보');
+					</script>
+				</p>
+				<br>
+				<iframe width="560" height="320" src="https://www.youtube.com/embed/1DbGzeN2FGo" title="2023 시즌 | LoL 개발 현황 업데이트 - 리그 오브 레전드" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 			</div>
 		</div>
-		<div class="wrap gameInfo">
-			<p class="date">
-				<script>
-					let today = new Date();
-					let y = today.getFullYear();
-					let m = today.getMonth()+1;
-					let d = today.getDate();
-					document.write( y +'년 '+ m +'월 ' + d +'일 '+' : 오늘의 게임정보');
-				</script>
-			</p>
-			<br>
-			<iframe width="560" height="320" src="https://www.youtube.com/embed/1DbGzeN2FGo" title="2023 시즌 | LoL 개발 현황 업데이트 - 리그 오브 레전드" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-		</div>
-		<div>
+		<div class="wrap auth_wrap">
 			<ul>
 				<li>
 					<form action="https://auth.worksmobile.com/oauth2/v2.0/authorize" method="get">

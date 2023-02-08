@@ -32,29 +32,29 @@ body{
 	
 }
 .cate-1{
-	color: #333333;
+	color: #f6d256;
 	letter-spacing: 5px;
 	position: absolute;
-	top: 15%;
+	top: 27%;
 	left: 250px;
 	
 }
 .cate-2{
 	margin:  15px;
-	border: 2px solid yellow;
+	border: 2px solid #f6d256;
 	border-radius: 20px;
-	background-color:#90ee90;
-	color: #333333;
+	background-color:#5587a2;
+	color: #f6d256;
 	
 }
 .cate-3{
 	margin: 10px;
-	border: 2px solid yellow;
+	border: 2px solid #f6d256;
 	border-radius: 10px;
-	background-color:  #03bb85;
-	color: #FAFAD2;
+	background-color:  #5587a2;
+	color: #ffeba8;
 	letter-spacing: 2px;
-	box-shadow:3px 3px 0px 0px #ffffe0 ;
+	box-shadow:3px 3px 0px 0px #ffeba8 ;
 }
 
 .departmentMemberList{
