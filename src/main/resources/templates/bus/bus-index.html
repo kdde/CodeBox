@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script>
+    /*/
+    $(function(){
+    	$("form").submit(function(){ //모든 from태그 무효화,  a href 무효화
+    		event.preventDefault();
+    	});
+    });
+    */
+    function searchBusInfo(event){
+    	event.preventDefault(); //form action 실행 안함.
+    	var strSrch = $("#strSrch").val().trim();
+  
+    	$.ajax({
+    		url:"/bus/search",
+    		//{name:value} --> name은 변수가 아님
+    		data:{strSrch:strSrch},
+    		success:function(result){
+    			$("#list-display").html(result);
+    		}
+    	});
+    }
+    </script>
+</head>
+<body>
+    <p>버스api</p>
+    <form onsubmit="searchBusInfo(event)">
+    	<label>버스번호 입력</label>
+    	<input type="text" id="strSrch">
+    	<select id="routeType">
+    		<option value="1">공항버스</option>
+    		<option value="2">마을버스(초록)</option>
+    		<option value="3">간선버스(파랑)</option>
+    		<option value="4">지선버스(초록)</option>
+    		<option value="5">순환버스</option>
+    		<option value="6">광역버스</option>
+    		<option value="7">인천버스</option>
+    		<option value="8`">경기버스</option>
+    	</select>
+    	<button>검색</button>
+    </form>
+    <div id="list-display">
+    
+    </div>
+</body>
+</html>

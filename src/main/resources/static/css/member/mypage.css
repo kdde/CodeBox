@@ -23,7 +23,7 @@
 	border: 3px solid #f6d256;
 	width: 950px;
 	height: 420px;
-	border-radius: 30px;
+	border-radius: 15px;
 	position: relative;
 	top: 0px;
 	color: #ffeba8;
@@ -36,7 +36,7 @@
 	width: 100%;
 }
 .mypage-img >img{
-	width: 120px;
+	width: 150px;
 	height :150px;
 	margin: 25px;
 	border-radius: 60%;
@@ -89,6 +89,7 @@
 	text-align: center;	
 }
 .salary-info p{
+
 	border-bottom: 1px solid #f6d256;
 	margin-top: 5px;
 	padding-bottom: 5px;
@@ -125,6 +126,8 @@
 	text-align: center;
 	font-size: 18px;
 	font-weight: 600;
+	border-bottom: 1px solid #03bb85;
+	padding: 10px 0;
 }
 
 .btn{
@@ -145,11 +148,15 @@
 	margin-bottom: 10px;
 }
 .fir-board{
+	border: 3px solid #03bb85;
+	border-radius: 10px;
 	margin-top: 15px;
 	margin-bottom: 40px;
 	width: 950px;
 }
 .sec-board{
+	border: 3px solid #03bb85;
+	border-radius: 10px;
 	margin-top: 15px;
 	width: 950px;
 }
