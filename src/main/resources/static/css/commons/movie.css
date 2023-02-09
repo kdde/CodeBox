@@ -1,9 +1,7 @@
 @charset "UTF-8";
 
 table{
-	margin-left: 40px;
-	margin-bottom: 60px;
-	position: absolute;
+	margin: 0;
 }
 thead{
 	background-color: #5587a2;
@@ -64,8 +62,8 @@ td:nth-child(6){
 }
 .direct{
 	position: absolute;
-    left: 1200px;
-    top: 30px;
+	right: 15px;
+    top: -80px;
     margin-bottom: 5px;
     font-weight: bold;
 }
